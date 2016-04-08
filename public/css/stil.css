@@ -39,6 +39,15 @@ a {
   width: 15%;
 }
 
+#seznam-uporabnikov div{
+  border-bottom: 1px solid #eee;
+  cursor: pointer;
+}
+
+#seznam-uporabnikov div:hover {
+  background-color: #ddd;
+}
+
 #seznam-kanalov div {
   border-bottom: 1px solid #eee;
   cursor: pointer;
