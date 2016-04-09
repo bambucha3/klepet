@@ -2,10 +2,17 @@ function divElementEnostavniTekst(sporocilo) {
   var jeSmesko = sporocilo.indexOf('http://sandbox.lavbic.net/teaching/OIS/gradivo/') > -1;
   var jeSlika = sporocilo.indexOf('<img') > -1;
   
-  if (jeSmesko){
-    sporocilo = sporocilo.replace(/\</g, '&lt;').replace(/\>/g, '&gt;').replace('&lt;img', '<img').replace('png\' /&gt;', 'png\' />');
+  if (jeSlika){
+    sporocilo = sporocilo.replace(/\</g, '&lt;').replace(/\>/g, '&gt;').replace(/&lt;img/g, '<img')
+              .replace(/png\' class=\'slika\' \/&gt;/g, 'png\' class=\'slika\' />')
+              .replace(/jpg\' class=\'slika\' \/&gt;/g, 'jpg\' class=\'slika\' />')
+              .replace(/gif\' class=\'slika\' \/&gt;/g, 'gif\' class=\'slika\' />');
   }
-
+  if (jeSmesko){
+    sporocilo = sporocilo.replace(/\</g, '&lt;').replace(/\>/g, '&gt;').replace(/&lt;img/g, '<img').replace(/png\' \/&gt;/g, 'png\' />');
+  }
+  
+  console.log(sporocilo);
   if (jeSmesko || jeSlika) {
     return $('<div style="font-weight: bold"></div>').html(sporocilo);
   } else {
@@ -131,9 +138,7 @@ function dodajSmeske(vhodnoBesedilo) {
     ":(": "sad.png"
   }
   for (var smesko in preslikovalnaTabela) {
-    vhodnoBesedilo = vhodnoBesedilo.replace(smesko,
-      "<img src='http://sandbox.lavbic.net/teaching/OIS/gradivo/" +
-      preslikovalnaTabela[smesko] + "' />");
+    vhodnoBesedilo = vhodnoBesedilo.replace(smesko, "<img src='http://sandbox.lavbic.net/teaching/OIS/gradivo/" + preslikovalnaTabela[smesko] + "' />");
   }
   return vhodnoBesedilo;
 }
@@ -141,7 +146,7 @@ function dodajSmeske(vhodnoBesedilo) {
 function dodajSlike(vhodnoBesedilo){
   var link = vhodnoBesedilo.match(new RegExp("https?:\/\/(?:[a-z\-]+\.)+[a-z]{2,6}(?:\/[^\/#?]+)+\.(?:jpe?g|gif|png)", "gi"));
   if (link != null) {
-    for (var i in link) vhodnoBesedilo += "<a href='" + link[i] + "'><img src='" + link[i] + "' class='slika'></img></a>";
+    for (var i in link) vhodnoBesedilo += "<img src='" + link[i] + "' class='slika' />";
   }
   return vhodnoBesedilo;
 }
