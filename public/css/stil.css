@@ -27,6 +27,11 @@ a {
   margin-right: 10px;
 }
 
+.slika{
+  margin-left:20px;
+  width: 200px;
+} 
+
 #seznam-kanalov, #seznam-uporabnikov {
   float: right;
   width: 100%;
