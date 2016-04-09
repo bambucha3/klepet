@@ -139,6 +139,9 @@ function dodajSmeske(vhodnoBesedilo) {
 }
 
 function dodajSlike(vhodnoBesedilo){
-  vhodnoBesedilo = vhodnoBesedilo.replace(/https?:\/\/(?:[a-z\-]+\.)+[a-z]{2,6}(?:\/[^\/#?]+)+\.(?:jpe?g|gif|png)$/g, "<a href='$&'><img src='$&' class='slika'></img></a>");
+  var link = vhodnoBesedilo.match(new RegExp("https?:\/\/(?:[a-z\-]+\.)+[a-z]{2,6}(?:\/[^\/#?]+)+\.(?:jpe?g|gif|png)", "gi"));
+  if (link != null) {
+    for (var i in link) vhodnoBesedilo += "<a href='" + link[i] + "'><img src='" + link[i] + "' class='slika'></img></a>";
+  }
   return vhodnoBesedilo;
 }
