@@ -3,7 +3,6 @@ function divElementEnostavniTekst(sporocilo) {
   var jeYoutube = sporocilo.indexOf("<iframe") > -1;
   if (jeYoutube){
     sporocilo = sporocilo.replace(/\</g, '&lt;').replace(/\>/g, '&gt;').replace(/&lt;iframe/g, "<iframe").replace(/\/&gt;/g, "/>");
-    console.log (sporocilo);
   }
   if (jeSmesko) {
     sporocilo = sporocilo.replace(/\</g, '&lt;').replace(/\>/g, '&gt;').replace('&lt;img', '<img').replace('png\' /&gt;', 'png\' />');
