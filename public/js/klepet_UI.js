@@ -1,7 +1,19 @@
 function divElementEnostavniTekst(sporocilo) {
   var jeSmesko = sporocilo.indexOf('http://sandbox.lavbic.net/teaching/OIS/gradivo/') > -1;
-  if (jeSmesko) {
-    sporocilo = sporocilo.replace(/\</g, '&lt;').replace(/\>/g, '&gt;').replace('&lt;img', '<img').replace('png\' /&gt;', 'png\' />');
+  var jeSlika = sporocilo.indexOf('class=\'slika\'') > -1;
+  
+  if (jeSlika || jeSmesko){
+     sporocilo = sporocilo.replace(/\</g, '&lt;').replace(/\>/g, '&gt;').replace(/&lt;img/g, '<img');
+     sporocilo = sporocilo.replace(/png\' class=\'slika\' \/&gt;/g, 'png\' class=\'slika\' />')
+              .replace(/jpg\' class=\'slika\' \/&gt;/g, 'jpg\' class=\'slika\' />')
+              .replace(/gif\' class=\'slika\' \/&gt;/g, 'gif\' class=\'slika\' />');
+     sporocilo = sporocilo.replace(/png\' \/&gt;/g, 'png\' />');
+  
+  }
+
+  
+  console.log(sporocilo);
+  if (jeSmesko || jeSlika) {
     return $('<div style="font-weight: bold"></div>').html(sporocilo);
   } else {
     return $('<div style="font-weight: bold;"></div>').text(sporocilo);
@@ -14,6 +26,7 @@ function divElementHtmlTekst(sporocilo) {
 
 function procesirajVnosUporabnika(klepetApp, socket) {
   var sporocilo = $('#poslji-sporocilo').val();
+  sporocilo = dodajSlike(sporocilo);
   sporocilo = dodajSmeske(sporocilo);
   var sistemskoSporocilo;
 
@@ -133,9 +146,15 @@ function dodajSmeske(vhodnoBesedilo) {
     ":(": "sad.png"
   }
   for (var smesko in preslikovalnaTabela) {
-    vhodnoBesedilo = vhodnoBesedilo.replace(smesko,
-      "<img src='http://sandbox.lavbic.net/teaching/OIS/gradivo/" +
-      preslikovalnaTabela[smesko] + "' />");
+    vhodnoBesedilo = vhodnoBesedilo.replace(smesko, "<img src='http://sandbox.lavbic.net/teaching/OIS/gradivo/" + preslikovalnaTabela[smesko] + "' />");
+  }
+  return vhodnoBesedilo;
+}
+
+function dodajSlike(vhodnoBesedilo){
+  var link = vhodnoBesedilo.match(new RegExp("https?:\/\/[\\w\\S]+\.(?:jpe?g|gif|png)", "gi"));
+  if (link != null) {
+    for (var i in link) vhodnoBesedilo += "<img src='" + link[i] + "' class='slika' />";
   }
   return vhodnoBesedilo;
 }
