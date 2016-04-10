@@ -4,7 +4,7 @@ function divElementEnostavniTekst(sporocilo) {
 
   if (jeSmesko || jeYoutube){
     sporocilo = sporocilo.replace(/\</g, '&lt;').replace(/\>/g, '&gt;');
-    sporocilo = sporocilo.replace(/&lt;iframe/g, "<iframe").replace(/allowfullscreen&gt;/g, "allowfullscreen>").replace(/&lt;\/iframe&gt;/g, "</iframe>")
+    sporocilo = sporocilo.replace(/&lt;iframe/g, "<iframe").replace(/allowfullscreen&gt;/g, "allowfullscreen>").replace(/&lt;\/iframe&gt;/g, "</iframe>");
     sporocilo = sporocilo.replace(/&lt;img/g, '<img').replace(/png\' \/&gt;/g, 'png\' />');
   }
   
