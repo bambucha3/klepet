@@ -1,31 +1,19 @@
 function divElementEnostavniTekst(sporocilo) {
   var jeSmesko = sporocilo.indexOf('http://sandbox.lavbic.net/teaching/OIS/gradivo/') > -1;
-<<<<<<< HEAD
   var jeSlika = sporocilo.indexOf('class=\'slika\'') > -1;
+  var jeYoutube = sporocilo.indexOf("</iframe>") > -1;
   
-  if (jeSlika || jeSmesko){
+  if (jeSlika || jeSmesko || jeYoutube){
      sporocilo = sporocilo.replace(/\</g, '&lt;').replace(/\>/g, '&gt;').replace(/&lt;img/g, '<img');
      sporocilo = sporocilo.replace(/png\' class=\'slika\' \/&gt;/g, 'png\' class=\'slika\' />')
               .replace(/jpg\' class=\'slika\' \/&gt;/g, 'jpg\' class=\'slika\' />')
               .replace(/gif\' class=\'slika\' \/&gt;/g, 'gif\' class=\'slika\' />');
      sporocilo = sporocilo.replace(/png\' \/&gt;/g, 'png\' />');
+     sporocilo = sporocilo.replace(/&lt;iframe/g, "<iframe").replace(/allowfullscreen&gt;/g, "allowfullscreen>").replace(/&lt;\/iframe&gt;/g, "</iframe>")
   
   }
 
-  
-  console.log(sporocilo);
-  if (jeSmesko || jeSlika) {
-=======
-  var jeYoutube = sporocilo.indexOf("</iframe>") > -1;
-
-  if (jeSmesko || jeYoutube){
-    sporocilo = sporocilo.replace(/\</g, '&lt;').replace(/\>/g, '&gt;');
-    sporocilo = sporocilo.replace(/&lt;iframe/g, "<iframe").replace(/allowfullscreen&gt;/g, "allowfullscreen>").replace(/&lt;\/iframe&gt;/g, "</iframe>")
-    sporocilo = sporocilo.replace(/&lt;img/g, '<img').replace(/png\' \/&gt;/g, 'png\' />');
-  }
-  
-  if (jeYoutube || jeSmesko){
->>>>>>> youtube
+  if (jeSmesko || jeSlika || jeYoutube) {
     return $('<div style="font-weight: bold"></div>').html(sporocilo);
   } else {
     return $('<div style="font-weight: bold;"></div>').text(sporocilo);
@@ -38,11 +26,8 @@ function divElementHtmlTekst(sporocilo) {
 
 function procesirajVnosUporabnika(klepetApp, socket) {
   var sporocilo = $('#poslji-sporocilo').val();
-<<<<<<< HEAD
   sporocilo = dodajSlike(sporocilo);
-=======
   sporocilo = dodajYoutube(sporocilo);
->>>>>>> youtube
   sporocilo = dodajSmeske(sporocilo);
   var sistemskoSporocilo;
 
