@@ -1,16 +1,16 @@
 function divElementEnostavniTekst(sporocilo) {
   var jeSmesko = sporocilo.indexOf('http://sandbox.lavbic.net/teaching/OIS/gradivo/') > -1;
-  var jeSlika = sporocilo.indexOf('<img') > -1;
+  var jeSlika = sporocilo.indexOf('class=\'slika\'') > -1;
   
-  if (jeSlika){
-    sporocilo = sporocilo.replace(/\</g, '&lt;').replace(/\>/g, '&gt;').replace(/&lt;img/g, '<img')
-              .replace(/png\' class=\'slika\' \/&gt;/g, 'png\' class=\'slika\' />')
+  if (jeSlika || jeSmesko){
+     sporocilo = sporocilo.replace(/\</g, '&lt;').replace(/\>/g, '&gt;').replace(/&lt;img/g, '<img');
+     sporocilo = sporocilo.replace(/png\' class=\'slika\' \/&gt;/g, 'png\' class=\'slika\' />')
               .replace(/jpg\' class=\'slika\' \/&gt;/g, 'jpg\' class=\'slika\' />')
               .replace(/gif\' class=\'slika\' \/&gt;/g, 'gif\' class=\'slika\' />');
+     sporocilo = sporocilo.replace(/png\' \/&gt;/g, 'png\' />');
+  
   }
-  if (jeSmesko){
-    sporocilo = sporocilo.replace(/\</g, '&lt;').replace(/\>/g, '&gt;').replace(/&lt;img/g, '<img').replace(/png\' \/&gt;/g, 'png\' />');
-  }
+
   
   console.log(sporocilo);
   if (jeSmesko || jeSlika) {
@@ -144,7 +144,7 @@ function dodajSmeske(vhodnoBesedilo) {
 }
 
 function dodajSlike(vhodnoBesedilo){
-  var link = vhodnoBesedilo.match(new RegExp("https?:\/\/(?:[a-z\-]+\.)+[a-z]{2,6}(?:\/[^\/#?]+)+\.(?:jpe?g|gif|png)", "gi"));
+  var link = vhodnoBesedilo.match(new RegExp("https?:\/\/[\\w\\S]+\.(?:jpe?g|gif|png)", "gi"));
   if (link != null) {
     for (var i in link) vhodnoBesedilo += "<img src='" + link[i] + "' class='slika' />";
   }
